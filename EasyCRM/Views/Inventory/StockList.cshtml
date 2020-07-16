@@ -1,0 +1,95 @@
+﻿@model IPagedList<StockItemIndexViewModel>
+@using EasyCRM.ViewModels.Inventory;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Stock List";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Stocks Available</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li class="active">
+                <strong>Stocks Available</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<p>
+    @using (Html.BeginForm("StockList", "Inventory", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search with part name..." name="search" aria-label="Search with part name" aria-describedby="basic-addon2">
+                    <span class="input-group-btn" style="width:auto !important;">
+                        <input type="submit" name="submit" value="Search" class="btn btn-success" />
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @Html.ActionLink("Add Stock", "AddStock", new { }, new { @class = "btn btn-success pull-right" })
+            </div>
+        </div>
+    }
+</p>
+<table class="table table-bordered table-responsive table-striped dataTables-example">
+    <thead>
+        <tr>
+            <th class="text-success">
+                Part Name
+            </th>
+            <th class="text-success">
+                Part Number
+            </th>
+            <th class="text-success">
+                Rack Number
+            </th>
+            <th class="text-success">
+                Stock in WareHouse
+            </th>
+            <th class="text-success">
+                Stock in Service Station
+            </th>
+            <th class="text-success">
+                Sale Price
+            </th>
+            @*<th class="text-success">
+                Action
+            </th>*@
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(m => item.PartName)</td>
+                <td>@Html.DisplayFor(m => item.PartNumber)</td>
+                <td>@Html.DisplayFor(m => item.RackNumber)</td>
+                <td>@Html.DisplayFor(m => item.StockAavilableinWareHouse)</td>
+                <td>@Html.DisplayFor(m => item.StockAavilableinServiceStation)</td>
+                <td>@Html.DisplayFor(m => item.SalePrice)</td>
+                @*<td>
+                    <a title="Edit" class="fa fa-edit" @Url.Action("Edit", "Inventory", new { id = item.ID })></a>
+                </td>*@
+            </tr>
+        }
+        @if (Model.Count == 0)
+        {
+            <tr>
+                <td colspan="7">
+                    No records exist!
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@Html.PagedListPager(Model, i => Url.Action("Index", "Inventory", new { i, search = Request.QueryString["search"] }))

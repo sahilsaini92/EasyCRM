@@ -1,0 +1,85 @@
+﻿@model IPagedList<InventoryItemIndexViewModel>
+@using EasyCRM.ViewModels.Inventory;
+@using PagedList;
+@using PagedList.Mvc;
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Inventory Items</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Dashboard_1", "Dashboards")">Home</a>
+            </li>
+            <li class="active">
+                <strong>Inventory Items</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<p>
+    @using (Html.BeginForm("Index", "Inventory", FormMethod.Get))
+    {
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search with part name..." name="search" aria-label="Search with part name" aria-describedby="basic-addon2">
+                    <span class="input-group-btn" style="width:auto !important;">
+                        <input type="submit" name="submit" value="Search" class="btn btn-success" />
+                    </span>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                @Html.ActionLink("Create New Item", "Create", new { }, new { @class = "btn btn-success pull-right" })
+            </div>
+        </div>
+    }
+</p>
+<table class="table table-bordered table-responsive table-striped dataTables-example">
+    <thead>
+        <tr>
+            <th class="text-success">
+                Part Name
+            </th>
+            <th class="text-success">
+                Part Number
+            </th>
+            <th class="text-success">
+                Action
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model == null || Model.Count == 0)
+        {
+            <tr>
+                <td colspan="7">
+                    No items exists !
+                </td>
+            </tr>
+        }
+        else
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td> @Html.ActionLink(item.PartName, "Details", new { id = item.ID })</td>
+                    <td>@Html.DisplayFor(m => item.PartNumber)</td>
+                    <td>
+                        <a title="Edit" class="fa fa-edit" href="@Url.Action("Edit", "Inventory", new { id = item.ID })"></a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+@if (Model != null)
+{
+    @Html.PagedListPager(Model, i => Url.Action("Index", "Inventory", new { i, search = Request.QueryString["search"] }))
+}

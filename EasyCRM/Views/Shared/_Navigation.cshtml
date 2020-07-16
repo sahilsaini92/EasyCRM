@@ -1,0 +1,150 @@
+﻿<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" class="img-circle" src="~/Images/arionlogo.png" />
+                    </span>
+                    @*<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">Arion</strong>
+                                </span> <span class="text-muted text-xs block"><b class="caret"></b></span>
+                            </span>
+                        </a>*@
+                    @*<ul class="dropdown-menu animated fadeInRight m-t-xs">
+                            <li><a href="@Url.Action("Profile", "AppViews")">Profile</a></li>
+                            <li><a href="@Url.Action("Contacts", "AppViews")">Contacts</a></li>
+                            <li><a href="@Url.Action("Inbox", "Mailbox")">Mailbox</a></li>
+                            <li class="divider"></li>
+                            <li><a href="@Url.Action("Login", "Pages")">Logout</a></li>
+                        </ul>*@
+                </div>
+                <div class="logo-element">
+                    AF+
+                </div>
+            </li>
+            <li>
+                <a href="@Url.Action("Dashboard", "Dashboard")"><i class="fa fa-th-large"></i> <span class="nav-label" data-i18n="nav.dashboard">Dashboard</span></a>
+                @* <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Dashboards", cssClass: "in")">
+                     <li class="@Html.IsSelected(action: "Dashboard")"><a href="@Url.Action("Dashboard", "Dashboard")">Dashboard</a></li>
+                    <li class="@Html.IsSelected(action: "Dashboard_2")"><a href="@Url.Action("Dashboard_2", "Dashboards")">Dashboard v.2</a></li>
+                         <li class="@Html.IsSelected(action: "Dashboard_3")"><a href="@Url.Action("Dashboard_3", "Dashboards")">Dashboard v.3</a></li>
+                         <li class="@Html.IsSelected(action: "Dashboard_4_1")"><a href="@Url.Action("Dashboard_4_1", "Dashboards")">Dashboard v.4</a></li>
+                         <li class="@Html.IsSelected(action: "Dashboard_5")"><a href="@Url.Action("Dashboard_5", "Dashboards")">Dashboard v.5</a></li>
+                                </ul>*@
+            </li>
+            <li>
+                <a href="#"><i class="fa fa-edit"></i> <span class="nav-label" data-i18n="nav.graphs">Inventory</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="@Url.Action("Create", "Inventory")">Create an Item</a></li>
+                    <li><a href="@Url.Action("Index", "Inventory")">Inventory Items</a></li>
+                    <li><a href="@Url.Action("AddStock", "Inventory")">Add Stocks</a></li>
+                    <li><a href="@Url.Action("StockList", "Inventory")">Stocks</a></li>
+                </ul>
+            </li>
+            @*<li>
+                <a href="#"><i class="fa fa-edit"></i> <span class="nav-label" data-i18n="nav.graphs">Employee</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse">
+                    <li><a href="@Url.Action("Create", "Employee")">Create an Employee</a></li>
+                    <li><a href="@Url.Action("Index", "Employee")">Employees</a></li>
+                </ul>
+            </li>*@
+            @*<li>
+                    <a href="#"><i class="fa fa-bell"></i> <span class="nav-label" data-i18n="nav.graphs">Reminders</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Reminders", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "ServiceRemindersList")"><a href="@Url.Action("ServiceRemindersList", "Reminders")">Service Reminders</a></li>
+                        <li class="@Html.IsSelected(action: "VehicleRenewalsList")"><a href="@Url.Action("VehicleRenewalsList", "Reminders")">Vehicle Renewals</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Service")">
+                    <a href="#"><i class="fa fa-wrench"></i> <span class="nav-label" data-i18n="nav.mailbox">Service</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Service", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "ServiceEntries")"><a href="@Url.Action("ServiceEntries", "Service")">Service History</a></li>
+                        <li class="@Html.IsSelected(action: "ServiceTaskList")"><a href="@Url.Action("ServiceTaskList", "Service")">Service Tasks</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Fuel")">
+                    <a href="#"><i class="fa fa-flask"></i> <span class="nav-label" data-i18n="nav.metrics">Fuel</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Fuel", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "FuelLog")"><a href="@Url.Action("FuelLog", "Fuel")">Fuel Log</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Vehicles")">
+                    <a href="#"><i class="fa fa-truck"></i> <span class="nav-label" data-i18n="nav.metrics">Vehicles</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Vehicles", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "VehiclesList")"><a href="@Url.Action("VehiclesList", "Vehicles")">Vehicles List</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "ContactsUsers")">
+                    <a href="#"><i class="fa fa-address-card"></i> <span class="nav-label" data-i18n="nav.metrics">Contacts & Users</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "ContactsUsers", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "ContactList")"><a href="@Url.Action("ContactList", "ContactsUsers")">Contact List</a></li>
+                        <li class="@Html.IsSelected(action: "VendorList")"><a href="@Url.Action("VendorList", "ContactsUsers")">Vendor List</a></li>
+                        <li class="@Html.IsSelected(action: "CompanyList")"><a href="@Url.Action("CompanyList", "ContactsUsers")">Company List</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "PartsInventory")">
+                    <a href="#"><i class="fa fa-gear"></i> <span class="nav-label" data-i18n="nav.metrics">Parts & Inventory</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "PartsInventory", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "PartsList")"><a href="@Url.Action("PartsList", "PartsInventory")">Parts List</a></li>
+                        <li class="@Html.IsSelected(action: "PurchaseOrderList")"><a href="@Url.Action("PurchaseOrderList", "PartsInventory")">Purchase Orders</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Reports")">
+                    <a href="#"><i class="fa fa-gear"></i> <span class="nav-label" data-i18n="nav.metrics">Reports</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Reports", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "IssuesReport")"><a href="@Url.Action("IssuesReport", "Reports")">Issue Report</a></li>
+                        <li class="@Html.IsSelected(action: "ServiceReminderReport")"><a href="@Url.Action("ServiceReminderReport", "Reports")">Service Reminder Report</a></li>
+                        <li class="@Html.IsSelected(action: "VehicleRenewalReport")"><a href="@Url.Action("VehicleRenewalReport", "Reports")">Vehicle Renewal Report</a></li>
+                        <li class="@Html.IsSelected(action: "ServiceHistoryReport")"><a href="@Url.Action("ServiceHistoryReport", "Reports")">Service History Report</a></li>
+                        <li class="@Html.IsSelected(action: "ServiceTaskReport")"><a href="@Url.Action("ServiceTaskReport", "Reports")">Service Task Report</a></li>
+                        <li class="@Html.IsSelected(action: "FuelLogReport")"><a href="@Url.Action("FuelLogReport", "Reports")">Fuel Log Report</a></li>
+                        <li class="@Html.IsSelected(action: "VehicleReport")"><a href="@Url.Action("VehicleReport", "Reports")">Vehicle Report</a></li>
+
+                        <li class="@Html.IsSelected(action: "PartsReport")"><a href="@Url.Action("PartsReport", "Reports")">Parts Report</a></li>
+                        <li class="@Html.IsSelected(action: "POReport")"><a href="@Url.Action("POReport", "Reports")"> PO Report</a></li>
+                        <li class="@Html.IsSelected(action: "CompaniesReport")"><a href="@Url.Action("CompaniesReport", "Reports")">Companies Report</a></li>
+                        <li class="@Html.IsSelected(action: "ContactsReport")"><a href="@Url.Action("ContactsReport", "Reports")">Contacts Report</a></li>
+                        <li class="@Html.IsSelected(action: "VendorsReport")"><a href="@Url.Action("VendorsReport", "Reports")">Vendors Report</a></li>
+                        <li class="@Html.IsSelected(action: "StepLineChart")"><a href="@Url.Action("StepLineChart", "Reports")">Step Line Chart</a></li>
+                        <li class="@Html.IsSelected(action: "StepLineDev")"><a href="@Url.Action("StepLineDev", "Reports")">Step Line Chart Dev</a></li>
+                    </ul>
+                </li>
+                <li class="@Html.IsSelected(controller: "Settings")">
+                    <a href="#"><i class="fa fa-gear"></i> <span class="nav-label" data-i18n="nav.metrics">Settings</span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Settings", cssClass: "in")">
+                        <li class="@Html.IsSelected(action: "RolesList")"><a href="@Url.Action("RolesList", "Settings")">Roles</a></li>
+                    </ul>
+                </li>*@
+            @*<li>
+                    <a href="#"><i class="fa fa-sitemap"></i> <span class="nav-label" data-i18n="nav.menulevels">Menu Levels </span><span class="fa arrow"></span></a>
+                    <ul class="nav nav-second-level">
+                        <li>
+                            <a href="#">Third Level <span class="fa arrow"></span></a>
+                            <ul class="nav nav-third-level">
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+                                <li>
+                                    <a href="#">Third Level Item</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <li><a href="#">Second Level Item</a></li>
+                        <li>
+                            <a href="#">Second Level Item</a>
+                        </li>
+                        <li>
+                            <a href="#">Second Level Item</a>
+                        </li>
+                    </ul>
+                </li>*@
+        </ul>
+    </div>
+</nav>

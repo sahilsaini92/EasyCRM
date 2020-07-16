@@ -1,0 +1,73 @@
+﻿@model EasyCRM.ViewModels.Inventory.AddStockViewModel
+@{
+    ViewBag.Title = "Add Stock";
+}
+    <div class="row wrapper border-bottom white-bg page-heading">
+        <div class="col-lg-10">
+            <h2></h2>
+            <ol class="breadcrumb">
+                <li>
+                    <a class="text-primary" href="@Url.Action("StockList", "Inventory")">Stocks</a>
+                </li>
+                <li class="active">
+                    <strong>Add Stock to Inventory</strong>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+@using (Html.BeginForm("AddStock", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+    <hr />
+    @Html.ValidationSummary("", new { @class = "text-danger" })
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.ItemId, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(m => m.ItemId, Model.ItemList, "Select Item", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.From, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(m => m.From, "Select Source", new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.To, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.EnumDropDownListFor(m => m.To, "Select Source", new { @class = "form-control", id = "drpSource" })
+        </div>
+    </div>
+    <div class="form-group" style="display:none;" id="divRack">
+        @Html.LabelFor(m => m.RackNumber, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.RackNumber, new { @class = "form-control", id = "txtRack" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Quantity, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Quantity, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.Price, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.SalePrice, new { @class = "col-md-2 control-label" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.SalePrice, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+}
+

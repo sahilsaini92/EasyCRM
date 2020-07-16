@@ -1,0 +1,45 @@
+﻿@model EasyCRM.ViewModels.Inventory.InventoryItemCreateViewModel
+@{
+    ViewBag.Title = "Create Inventory Item";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2></h2>
+        <ol class="breadcrumb">
+            <li>
+                <a class="text-primary" href="@Url.Action("Index", "Inventory")">Inventory Items</a>
+            </li>
+            <li class="active">
+                <strong>Create a Inventory Item</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+@using (Html.BeginForm("Create", "Inventory", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+
+    <hr />
+    @*@Html.ValidationSummary(false)*@
+    <div class="form-group">
+        @Html.LabelFor(m => m.PartName, new { @class = "col-md-2 control-label required-field" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PartName, new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(m => m.PartName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(m => m.PartNumber, new { @class = "col-md-2 control-label required-field" })
+        <div class="col-md-10">
+            @Html.TextBoxFor(m => m.PartNumber, new { @class = "form-control", @required = "required" })
+            @Html.ValidationMessageFor(m => m.PartNumber, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Create" />
+        </div>
+    </div>
+}
