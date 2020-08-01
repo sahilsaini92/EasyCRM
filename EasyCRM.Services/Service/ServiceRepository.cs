@@ -1,29 +1,31 @@
 ﻿using EasyCRM.Entities.DataConnection;
 using EasyCRM.Entities.Inventory;
 using EasyCRM.Entities.Login;
+using EasyCRM.Entities.Service;
+using EasyCRM.Services.Interfaces;
 using EasyCRM.Services.Interfaces.Inventory;
 using EasyCRM.ViewModels.Employees;
 using EasyCRM.ViewModels.Inventory;
 using EasyCRM.ViewModels.Login;
+using EasyCRM.ViewModels.Service;
 using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EasyCRM.Services.Inventory
+namespace EasyCRM.Services.Service
 {
-    public class InventoryCreateService : IInventoryItem
+    public class ServiceRepository : IService
     {
 
         private EasyCRMDBContext db = new EasyCRMDBContext();
-        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(InventoryCreateService));
+        log4net.ILog logger = log4net.LogManager.GetLogger(typeof(ServiceRepository));
 
-        public IPagedList<InventoryItemIndexViewModel> GetAllInventoryItems(string search, int? i)
+        public IPagedList<InventoryItemIndexViewModel> GetAllServices(string search, int? i)
         {
             try
             {
@@ -33,8 +35,6 @@ namespace EasyCRM.Services.Inventory
                             ID = x.ID,
                             PartName = x.PartName,
                             PartNumber = x.PartNumber,
-                            Price = x.Price,
-                            Description = x.Description,
                             CreatedBy = x.CreatedBy,
                             CreatedDate = x.CreatedDate
                         }).ToList().ToPagedList(i ?? 1, 10);
@@ -47,13 +47,13 @@ namespace EasyCRM.Services.Inventory
             }
         }
 
-        public int CreateInventoryItemAsync(InventoryItemCreateViewModel item, HttpPostedFileBase file)
+        public int CreateServiceAsync(InventoryItemCreateViewModel item)
         {
             try
             {
                 EasyCRM.Entities.Inventory.InventoryItem inventoryItem = new EasyCRM.Entities.Inventory.InventoryItem();
-                var isExist = db.InventoryItem.Where(ii => ii.PartName == item.PartName).Count();
-                if (isExist > 0)
+                var isExist = db.InventoryItem.Any(ii => ii.PartName == item.PartName);
+                if (isExist)
                 {
                     return 0;
                 }
@@ -63,10 +63,6 @@ namespace EasyCRM.Services.Inventory
                 inventoryItem.LastModifiedDate = DateTime.UtcNow;
                 inventoryItem.CreatedBy = item.CreatedBy;
                 inventoryItem.Modifiedby = item.Modifiedby;
-                inventoryItem.Price = item.Price;
-                inventoryItem.Description = item.Description;
-                inventoryItem.Image = ConvertToBytes(file);
-                inventoryItem.ImageName = file.FileName;
                 db.InventoryItem.Add(inventoryItem);
                 db.SaveChanges();
                 return inventoryItem.ID;
@@ -77,7 +73,7 @@ namespace EasyCRM.Services.Inventory
             }
         }
 
-        public async Task<InventoryItemCreateViewModel> EditInventoryItemAsync(int id)
+        public async Task<InventoryItemCreateViewModel> EditServiceAsync(int id)
         {
             try
             {
@@ -85,11 +81,8 @@ namespace EasyCRM.Services.Inventory
                 var dbItem = await db.InventoryItem.Where(ii => ii.ID == id).FirstOrDefaultAsync();
                 vm.PartName = dbItem.PartName;
                 vm.PartNumber = dbItem.PartNumber;
-                vm.Price = dbItem.Price;
-                vm.Description = dbItem.Description;
                 vm.LastModifiedDate = dbItem.LastModifiedDate;
                 vm.Modifiedby = dbItem.Modifiedby;
-                vm.Contents = string.Format("data:image/png;base64,{0}", dbItem.Image);
                 return vm;
             }
             catch (Exception exp)
@@ -98,7 +91,7 @@ namespace EasyCRM.Services.Inventory
             }
         }
 
-        public int EditInventoryItemAsync(InventoryItemCreateViewModel item)
+        public int EditServiceAsync(InventoryItemCreateViewModel item)
         {
             try
             {
@@ -112,8 +105,6 @@ namespace EasyCRM.Services.Inventory
                 dbItem.PartNumber = item.PartNumber;
                 dbItem.LastModifiedDate = DateTime.UtcNow;
                 dbItem.Modifiedby = item.Modifiedby;
-                dbItem.Price = item.Price;
-                dbItem.Description = item.Description;
                 db.Entry(dbItem).State = EntityState.Modified;
                 db.SaveChanges();
                 return dbItem.ID;
@@ -221,7 +212,7 @@ namespace EasyCRM.Services.Inventory
 
         }
 
-        public InventoryItemDetailsViewModel CreateItemDetails(int id)
+        public InventoryItemDetailsViewModel ServiceDetails(int id)
         {
             try
             {
@@ -266,13 +257,57 @@ namespace EasyCRM.Services.Inventory
             }
         }
 
-
-        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        public IEnumerable<StockItemIndexViewModel> GetAllItems()
         {
-            byte[] imageBytes = null;
-            BinaryReader reader = new BinaryReader(image.InputStream);
-            imageBytes = reader.ReadBytes((int)image.ContentLength);
-            return imageBytes;
+            try
+            {
+                var items = db.Stocks
+                        .Select(x => new StockItemIndexViewModel()
+                        {
+                            ID = x.ID,
+                            PartName = x.Item.PartName,
+                            PartNumber = x.Item.PartNumber,
+                            StockAavilableinServiceStation = x.ServiceStationStock,
+                            StockAavilableinWareHouse = x.WarehouseStock,
+                            Price = x.Price,
+                            SalePrice = x.SalePrice,
+                            RackNumber = x.RackNumber,
+                            Source = x.From,
+                            CreatedBy = x.CreatedBy,
+                            CreatedDate = x.CreatedDate
+                        }).ToList().AsEnumerable();
+                return items;
+            }
+            catch (Exception exp)
+            {
+                return null;
+            }
+        }
+
+        public QuoteItemViewModel ServiceItems(int? serviceId = 0)
+        {
+            if (serviceId == null)
+            {
+                QuoteItemViewModel vm = new QuoteItemViewModel();
+                vm.Items = new List<ServiceCreateItemsViewModel>();
+                ServiceCreateItemsViewModel item = new ServiceCreateItemsViewModel();
+                var enumData = from LineItemType e in Enum.GetValues(typeof(LineItemType))
+                               select new
+                               {
+                                   ID = (int)e,
+                                   Name = e.ToString()
+                               };
+                var selectList = new SelectList(enumData, "ID", "Name");
+                item.LineItemTypes = selectList;
+                var itemSelectList = GetAllItems();
+                item.Items = new SelectList(itemSelectList, "ID", "PartName");
+                vm.Items.Add(item);
+                return vm;
+            }
+            else
+            {
+                return null;
+            }
         }
 
 

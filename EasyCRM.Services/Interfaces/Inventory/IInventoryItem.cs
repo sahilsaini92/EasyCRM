@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace EasyCRM.Services.Interfaces.Inventory
 {
@@ -12,7 +13,7 @@ namespace EasyCRM.Services.Interfaces.Inventory
     {
         IPagedList<InventoryItemIndexViewModel> GetAllInventoryItems(string search, int? i);
 
-        int CreateInventoryItemAsync(InventoryItemCreateViewModel item);
+        int CreateInventoryItemAsync(InventoryItemCreateViewModel item, HttpPostedFileBase file);
 
         Task<InventoryItemCreateViewModel> EditInventoryItemAsync(int id);
 

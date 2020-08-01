@@ -51,6 +51,12 @@
                 Part Number
             </th>
             <th class="text-success">
+                Price
+            </th>
+            <th class="text-success">
+                Description
+            </th>
+            <th class="text-success">
                 Action
             </th>
         </tr>
@@ -71,6 +77,8 @@
                 <tr>
                     <td> @Html.ActionLink(item.PartName, "Details", new { id = item.ID })</td>
                     <td>@Html.DisplayFor(m => item.PartNumber)</td>
+                    <td> @Html.DisplayFor(m => item.Price)</td>
+                    <td>@Html.DisplayFor(m => item.Description)</td>
                     <td>
                         <a title="Edit" class="fa fa-edit" href="@Url.Action("Edit", "Inventory", new { id = item.ID })"></a>
                     </td>

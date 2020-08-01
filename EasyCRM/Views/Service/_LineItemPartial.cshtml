@@ -1,0 +1,40 @@
+﻿@model List<EasyCRM.ViewModels.Service.ServiceCreateItemsViewModel>
+@using (Html.BeginForm("Items"))
+{
+    @Html.AntiForgeryToken()
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+
+            </td>
+            <td>
+                @Html.DropDownListFor(m => item.LineItemType, item.LineItemTypes, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.DropDownListFor(m => item.PartName, item.Items, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(m => item.Quantity, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(m => item.Rate, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(m => item.Discount, new { @class = "form-control" })
+            </td>
+            <td>
+                @Html.TextBoxFor(m => item.TotalAmount, new { @class = "form-control" })
+            </td>
+            <td>
+                <a><i class="fa fa-remove"></i></a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.TextAreaFor(m => item.Description, new { @class = "form-control" })
+            </td>
+        </tr>
+    }
+}
+

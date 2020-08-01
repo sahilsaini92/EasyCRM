@@ -20,7 +20,7 @@ namespace EasyCRM.Tests.Controllers
             vm.PartName = "Test 9";
             vm.PartNumber = "Test 9";
             vm.CreatedDate = DateTime.UtcNow;
-            service.CreateInventoryItemAsync(vm);
+            service.CreateInventoryItemAsync(vm,null);
         }
 
     }

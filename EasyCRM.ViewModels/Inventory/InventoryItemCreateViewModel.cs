@@ -21,6 +21,21 @@ namespace EasyCRM.ViewModels.Inventory
 
         public SelectList SourceList { get; set; }
 
+        [DisplayName("Price")]
+        [Required(ErrorMessage = "Price is required")]
+        public decimal Price { get; set; }
+
+        [DisplayName("Description")]
+        public string Description { get; set; }
+
+        [AllowHtml]
+        public string Contents { get; set; }
+        public byte[] Image { get; set; }
+
+        public string ImageName { get; set; }
+
+        public string ImageUrl { get; set; }
+
     }
 
 

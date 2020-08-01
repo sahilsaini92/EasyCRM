@@ -80,6 +80,11 @@
     <Compile Include="BasePropertiesViewModel.cs" />
     <Compile Include="Employees\EmployeeCreateViewModel.cs" />
     <Compile Include="Employees\EmployeeIndexViewModel.cs" />
+    <Compile Include="Service\QuoteItemViewModel.cs" />
+    <Compile Include="Service\ServiceCreateViewModel.cs" />
+    <Compile Include="Service\ServiceCreateItemsViewModel.cs" />
+    <Compile Include="Service\ServiceDetailsViewModel.cs" />
+    <Compile Include="Service\ServiceIndexViewModel.cs" />
     <Compile Include="Inventory\AddStockViewModel.cs" />
     <Compile Include="Inventory\InventoryItemDetailsViewModel.cs" />
     <Compile Include="Inventory\StockItemIndexViewModel.cs" />

@@ -9,6 +9,7 @@ using PagedList;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
@@ -41,7 +42,7 @@ namespace EasyCRM.Services.Inventory
             }
         }
 
-        public int CreateInventoryItemAsync(InventoryItemCreateViewModel item)
+        public int CreateInventoryItemAsync(InventoryItemCreateViewModel item,HttpPostedFileBase files)
         {
             try
             {
@@ -57,6 +58,7 @@ namespace EasyCRM.Services.Inventory
                 inventoryItem.LastModifiedDate = DateTime.UtcNow;
                 inventoryItem.CreatedBy = item.CreatedBy;
                 inventoryItem.Modifiedby = item.Modifiedby;
+                inventoryItem.Image = ConvertToBytes(files);
                 db.InventoryItem.Add(inventoryItem);
                 db.SaveChanges();
                 return inventoryItem.ID;
@@ -250,6 +252,15 @@ namespace EasyCRM.Services.Inventory
                 return null;
             }
         }
+
+        public byte[] ConvertToBytes(HttpPostedFileBase image)
+        {
+            byte[] imageBytes = null;
+            BinaryReader reader = new BinaryReader(image.InputStream);
+            imageBytes = reader.ReadBytes((int)image.ContentLength);
+            return imageBytes;
+        }
+
 
 
     }

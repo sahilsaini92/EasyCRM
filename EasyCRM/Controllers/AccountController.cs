@@ -81,19 +81,26 @@ namespace EasyCRM.Controllers
 
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await new UserCreateService().LoginCheck(model);
+            //await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
-                case SignInStatus.Success:
+                case true:
                     return RedirectToLocal(returnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.RequiresVerification:
-                    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-                case SignInStatus.Failure:
+                case false:
                 default:
                     ModelState.AddModelError("", "Invalid login attempt.");
                     return View(model);
+                    //case SignInStatus.Success:
+                    //    return RedirectToLocal(returnUrl);
+                    //case SignInStatus.LockedOut:
+                    //    return View("Lockout");
+                    //case SignInStatus.RequiresVerification:
+                    //    return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
+                    //case SignInStatus.Failure:
+                    //default:
+                    //    ModelState.AddModelError("", "Invalid login attempt.");
+                    //    return View(model);
             }
         }
 
@@ -386,12 +393,10 @@ namespace EasyCRM.Controllers
 
         //
         // POST: /Account/LogOff
-        [HttpPost]
-        [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         //

@@ -1,5 +1,6 @@
 ﻿using EasyCRM.Entities.DataConnection;
 using EasyCRM.Entities.Login;
+using EasyCRM.Models;
 using EasyCRM.ViewModels.Login;
 using System;
 using System.Collections.Generic;
@@ -30,6 +31,12 @@ namespace EasyCRM.Services.Account
             db.AspNetUser.Add(user);
             await db.SaveChangesAsync();
             return user.ID;
+        }
+
+        public async Task<bool> LoginCheck(LoginViewModel vm)
+        {
+            var isUser = db.AspNetUser.Where(u => u.Email == vm.Email && u.Password == vm.Password).Any();
+            return isUser;
         }
     }
 }

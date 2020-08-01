@@ -5,9 +5,9 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 
-namespace EasyCRM.ViewModels.Inventory
+namespace EasyCRM.ViewModels
 {
-    public class InventoryItemIndexViewModel : BasePropertiesViewModel
+    public class ServiceIndexViewModel : BasePropertiesViewModel
     {
         public string PartName { get; set; }
 
@@ -21,11 +21,9 @@ namespace EasyCRM.ViewModels.Inventory
 
         public int Quantity { get; set; }
 
-        public decimal Price { get; set; }
+        public int Price { get; set; }
 
         public int SalePrice { get; set; }
-
-        public string Description { get; set; }
     }
 
 

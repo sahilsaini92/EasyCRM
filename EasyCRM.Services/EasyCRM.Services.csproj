@@ -43,6 +43,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EasyCRM, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\EasyCRM\bin\EasyCRM.dll</HintPath>
+    </Reference>
     <Reference Include="EntityFramework">
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
@@ -111,7 +115,9 @@
     <Compile Include="Account\UserReadService.cs" />
     <Compile Include="Account\UserCreateService.cs" />
     <Compile Include="Employees\EmployeeCreateService.cs" />
+    <Compile Include="Interfaces\Service\IService.cs" />
     <Compile Include="Interfaces\Inventory\IInventoryItem.cs" />
+    <Compile Include="Service\ServiceRepository.cs" />
     <Compile Include="Inventory\InventoryCreateService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

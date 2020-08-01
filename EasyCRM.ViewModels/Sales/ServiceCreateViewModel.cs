@@ -1,5 +1,6 @@
 ﻿using EasyCRM.Entities.Employees;
 using EasyCRM.Entities.Sales;
+using EasyCRM.ViewModels.Service;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -25,8 +26,7 @@ namespace EasyCRM.ViewModels.Sales
 
         public string Notes { get; set; }
 
-        public List<LineItems> LineItems { get; set; }
-
+        public List<ServiceCreateItemsViewModel> LineItems { get; set; }
 
     }
 }

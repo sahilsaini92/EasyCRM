@@ -81,7 +81,8 @@ namespace EasyCRM.Controllers
         [HttpPost]
         public ActionResult Create(InventoryItemCreateViewModel vm)
         {
-            var id = _repository.CreateInventoryItemAsync(vm);
+            HttpPostedFileBase file = Request.Files["ImageData"];
+            var id = _repository.CreateInventoryItemAsync(vm,file);
             if (id == 0)
             {
                 ModelState.AddModelError("PartName", "Item with this name already exists!");

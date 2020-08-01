@@ -1,0 +1,32 @@
+﻿@model EasyCRM.ViewModels.Service.QuoteItemViewModel
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>SNo.</th>
+                    <th>Item Type</th>
+                    <th>Part Name</th>
+                    <th>Quantity</th>
+                    <th>Rate</th>
+                    <th>Discount</th>
+                    <th>Total Amount</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @Html.Partial("_LineItemPartial", Model.Items)
+            </tbody>
+        </table>
+
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
